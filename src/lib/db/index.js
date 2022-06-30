@@ -2,8 +2,6 @@ const { open } = require("sqlite"); // traer unicamente la funcion open
 const sqlite3 = require("sqlite3"); // traer todo el modulo (el default)
 
 // obteniendo la base de datos
-// la siguiente funcion se seguira ejecutando sin interrumpir
-// todo el demas codigo
 async function getDBHandler(){
     try { // obteniendo el archivo, si este no existe se crea
         const dbHandler = await open({ // el AWAIT es para verificar si se encuentra el archivo

@@ -6,7 +6,7 @@ const { getDBHandler } = require("../db");
 const RequestHandler = Express.Router(); //manejador de peticiones por rutas
 
 // obteniendo los to dos
-RequestHandler.get("/to-dos", async (request, response, next) => {
+RequestHandler.get("/to-dos", async (request, response) => {
     try {
         // obteniendo el dbHandler para interactuar con la BD
         const dbHandler = await getDBHandler();
@@ -19,7 +19,7 @@ RequestHandler.get("/to-dos", async (request, response, next) => {
 
         // si no existen to dos
         if (!todos || !todos.length) {
-            response.status(404).send({ message: "To Dos Not Found" });
+            return response.status(404).send({ message: "To Dos Not Found" }).end();
         }
 
         // enviando los to dos encontrados
