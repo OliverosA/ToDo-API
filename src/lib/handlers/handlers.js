@@ -38,14 +38,6 @@ RequestHandler.post("/to-dos", async (request, response, next) => {
     try {
 
         const { title, description, isDone: is_done } = request.body;
-        
-        /*if(is_done !== 0 || 1 ){
-            if(is_done === true) is_done = 1;
-            if(is_done === false) is_done = 0;
-            return response.status(400).send({ 
-                message: `isDone must be 1 (true) or 0 (false), got ${is_done}` 
-            });
-        }*/
 
         const dbHandler = await getDBHandler();
 
@@ -103,7 +95,7 @@ RequestHandler.patch("/to-dos/:id?", async (request, response) => {
             `UPDATE todos SET title = ?, description = ?, is_done = ? WHERE id = ?`,
             title || todoToUpdate.title,
             description || todoToUpdate.description,
-            is_done || todoToUpdate.is_done,
+            is_done !== undefined ? is_done : todoToUpdate.is_done,
             todoId
         );
         
@@ -129,7 +121,7 @@ RequestHandler.delete("/to-dos/:id?", async (request, response, next) => {
         const dbHandler = await getDBHandler();
 
         if(!todoId){
-            return response.status(400).send({ error: "Missing To Do ID" });
+            return response.status(400).send({ error: "Missing To Do ID" }).end();
         }
 
         const deletedTodo = await dbHandler.run(`
@@ -158,9 +150,5 @@ RequestHandler.delete("/to-dos/:id?", async (request, response, next) => {
     }
 });
 
-async function getDate(){
-    const hoy = new Date();
-    
-}
 
 module.exports = RequestHandler;
