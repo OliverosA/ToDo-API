@@ -29,7 +29,9 @@ async function initializeDB(){
                 id INTEGER PRIMARY KEY,
                 title TEXT,
                 description TEXT,
-                is_done INTEGER DEFAULT 0
+                is_done INTEGER DEFAULT 0,
+                creation_date TEXT,
+                update_date TEXT
             ) 
         `);
 
