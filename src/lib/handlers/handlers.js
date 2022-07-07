@@ -93,7 +93,8 @@ RequestHandler.patch("/to-dos/:id?", async (request, response) => {
 
         // validando los campos enviados
         const updatedTodo = await dbHandler.run(
-            `UPDATE todos SET title = ?, description = ?, is_done = ? WHERE id = ?`,
+            `UPDATE todos SET title = ?, description = ?, is_done = ?, edit_date = DATE('now', 'localtime') 
+            WHERE id = ?`,
             title || todoToUpdate.title,
             description || todoToUpdate.description,
             is_done !== undefined ? is_done : todoToUpdate.is_done,
