@@ -27,7 +27,7 @@ RequestHandler.get("/to-dos", async (request, response) => {
 
     } catch (error) { //se retorna status 500 de error y los mensajes
         response.status(500).send({
-            error: `Something went wrong when trying to ge the to dos list`,
+            error: `Something went wrong when trying to get the to do list`,
             errorInfo: error.message,
         });
     }
@@ -43,11 +43,12 @@ RequestHandler.post("/to-dos", async (request, response, next) => {
 
         // insertando nuevo to do en la BD
         const newTodo = await dbHandler.run(`
-            INSERT INTO todos (title, description, is_done)
+            INSERT INTO todos (title, description, is_done, creation_date)
             VALUES (
                 '${title}',
                 '${description}',
-                ${is_done}
+                ${is_done},
+                DATE('now', 'localtime')
             )`
         );
 
@@ -98,8 +99,7 @@ RequestHandler.patch("/to-dos/:id?", async (request, response) => {
             is_done !== undefined ? is_done : todoToUpdate.is_done,
             todoId
         );
-        
-
+    
         dbHandler.close();
 
         response.send({ updatedTodo });
@@ -149,6 +149,5 @@ RequestHandler.delete("/to-dos/:id?", async (request, response, next) => {
         });
     }
 });
-
 
 module.exports = RequestHandler;
