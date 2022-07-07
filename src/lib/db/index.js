@@ -31,7 +31,7 @@ async function initializeDB(){
                 description TEXT,
                 is_done INTEGER DEFAULT 0,
                 creation_date TEXT,
-                update_date TEXT
+                edit_date TEXT
             ) 
         `);
 
