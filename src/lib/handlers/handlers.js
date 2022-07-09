@@ -43,12 +43,13 @@ RequestHandler.post("/to-dos", async (request, response, next) => {
 
         // insertando nuevo to do en la BD
         const newTodo = await dbHandler.run(`
-            INSERT INTO todos (title, description, is_done, creation_date)
+            INSERT INTO todos (title, description, is_done, creation_date, edit_date)
             VALUES (
                 '${title}',
                 '${description}',
                 ${is_done},
-                DATE('now', 'localtime')
+                DATE('now', 'localtime'),
+                ''
             )`
         );
 
